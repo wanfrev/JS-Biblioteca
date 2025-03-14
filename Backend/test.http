@@ -1,0 +1,17 @@
+### Prueba de Login
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+  "email": "q@q.com",
+  "password": "1234"
+}
+
+
+### Prueba de Registro
+POST http://localhost:5000/api/register
+Content-Type: application/json
+{
+  "email": "nuevo@usuario.com",
+  "password": "contraseña123"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "biblioteca-virtual",
+  "version": "1.0.0",
+  "description": "Una biblioteca virtual para almacenar y gestionar tesis.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src",
+    "build": "echo 'Build step not defined'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "keywords": [
+    "biblioteca",
+    "tesis",
+    "virtual",
+    "gestión"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT"
+}
