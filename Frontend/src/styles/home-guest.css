@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: linear-gradient(90deg, #284978 1%, #133D79 39%, #002F71 71%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header .logo {
+  width: 50px;
+  height: auto;
+}
+
+header input {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+header .logout-icons {
+  display: flex;
+  gap: 10px;
+}
+
+header .logout-icons svg {
+  fill: white;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+}

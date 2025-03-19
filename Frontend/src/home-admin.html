@@ -5,40 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Virtual de Tesis - Admin</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/home-admin.css">
 </head>
 <body>
     <header>
-        <h1>Biblioteca Virtual de Tesis</h1>
+        <img src="assets/logoUnir1.webp" alt="Logo" class="logo">
         <input type="text" id="search" placeholder="Buscar tesis...">
-        <select id="filter-career">
-            <option value="">Filtrar por carrera</option>
-            <option value="Ingeniería">Ingeniería</option>
-            <option value="Ciencias Sociales">Ciencias Sociales</option>
-            <option value="Humanidades">Humanidades</option>
-            <!-- Agregar más opciones según sea necesario -->
-        </select>
-        <select id="filter-alphabetical">
-            <option value="">Ordenar alfabéticamente</option>
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-        </select>
-        <select id="filter-date">
-            <option value="">Filtrar por fecha de publicación</option>
-            <!-- Opciones de fechas se agregarán dinámicamente -->
-        </select>
-        <select id="filter-author">
-            <option value="">Filtrar por autor</option>
-            <!-- Opciones de autores se agregarán dinámicamente -->
-        </select>
+        <div class="logout-icons">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: #FFF;" onclick="logout()"><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
+        </div>
     </header>
     <main>
         <section id="thesis-list">
             <!-- Las tesis se mostrarán aquí dinámicamente -->
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Biblioteca Virtual de Tesis</p>
-    </footer>
     <script src="scripts/app.js"></script>
+    <script>
+        function logout() {
+            window.location.href = 'login-admin.html';
+        }
+    </script>
 </body>
 </html>
