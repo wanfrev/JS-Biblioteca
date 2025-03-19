@@ -10,9 +10,14 @@
     <div class="login">
         <div class="login-container">
             <img src="assets/logoUnir.webp" alt="Logo" class="logo">
-            <button>Entrar</button>
+            <button onclick="loginGuest()">Entrar</button>
             <p><a href="login-admin.html">¿Eres Admin?</a></p>
         </div>
     </div>
+    <script>
+        function loginGuest() {
+            window.location.href = 'home-guest.html';
+        }
+    </script>
 </body>
 </html>

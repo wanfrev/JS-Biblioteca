@@ -12,9 +12,14 @@
             <img src="assets/logoUnir.webp" alt="Logo" class="logo">
             <input type="text" id="username" placeholder="Username">
             <input type="password" id="password" placeholder="Password">
-            <button>Entrar</button>
+            <button onclick="loginAdmin()">Entrar</button>
             <p><a href="login-guest.html">¿Eres Invitado?</a></p>
         </div>
     </div>
+    <script>
+        function loginAdmin() {
+            window.location.href = 'home-admin.html';
+        }
+    </script>
 </body>
 </html>
