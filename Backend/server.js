@@ -2,12 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const connectDB = require('./db/db');
+const db = require('./db/db'); // Importar el pool de conexiones
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 
-// Conectar a la base de datos
-connectDB();
+// Verificar la conexión a la base de datos
+db.getConnection()
+  .then(() => console.log("Conexión a MySQL exitosa"))
+  .catch((error) => {
+    console.error("Error al conectar a MySQL:", error.message);
+    process.exit(1);
+  });
 
 const app = express();
 const PORT = process.env.PORT || 5000;

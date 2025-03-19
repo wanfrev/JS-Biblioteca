@@ -1,12 +1,10 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../db/db'); // Asegúrate de tener una conexión a la base de datos MySQL
-const authMiddleware = require('../middlewares/authMiddleware');
+const db = require('../db/db'); // Importar el pool de conexiones
 const { loginSchema } = require('../validators/userValidator');
 const router = express.Router();
 
-// Iniciar sesión
+// Iniciar sesión como administrador
 router.post('/login', async (req, res) => {
   const { error } = loginSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
@@ -14,16 +12,15 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    // Realizar la consulta a la base de datos
     const [user] = await db.query('SELECT * FROM admin WHERE ad_nom = ?', [username]);
     if (user.length === 0) {
       console.log('Usuario no encontrado:', username); // Verificar si el usuario no se encuentra
       return res.status(401).json({ error: 'Nombre de usuario o contraseña incorrectos' });
     }
 
-    console.log('Stored Hashed Password:', user[0].ad_pass); // Verificar la contraseña hasheada almacenada
-    const isMatch = await bcrypt.compare(password, user[0].ad_pass);
-    console.log('Password Match:', isMatch); // Verificar el resultado de la comparación
-    if (!isMatch) {
+    console.log('Contraseña almacenada:', user[0].ad_pass); // Verificar la contraseña almacenada
+    if (password !== user[0].ad_pass) {
       console.log('Contraseña incorrecta para el usuario:', username); // Verificar si la contraseña es incorrecta
       return res.status(401).json({ error: 'Nombre de usuario o contraseña incorrectos' });
     }
@@ -33,24 +30,9 @@ router.post('/login', async (req, res) => {
     res.cookie('token', token, { httpOnly: true });
     res.json({ mensaje: "Inicio de sesión exitoso", isAdmin: true }); // Añadir isAdmin a la respuesta
   } catch (error) {
+    console.error("Error en el servidor:", error); // Verificar si hay errores en el backend
     res.status(500).json({ error: error.message });
   }
-});
-
-// Ruta protegida para obtener el perfil del usuario
-router.get('/profile', authMiddleware, async (req, res) => {
-  try {
-    const [user] = await db.query('SELECT id_admin, ad_nom, ad_eml FROM admin WHERE id_admin = ?', [req.user.id]);
-    res.json(user[0]);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Cerrar sesión
-router.post('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.json({ mensaje: "Cierre de sesión exitoso" });
 });
 
 module.exports = router;
