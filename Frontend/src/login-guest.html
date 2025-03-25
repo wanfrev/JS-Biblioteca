@@ -10,14 +10,14 @@
     <div class="login">
       <div class="login-container">
         <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
-        <button onclick="loginGuest()">Entrar</button>
+        <button id="login-guest-btn">Entrar</button>
         <p><a href="login-admin.html">¿Eres Admin?</a></p>
       </div>
     </div>
     <script type="module">
       import { loginGuest } from "./js/login.js";
 
-      document.querySelector("button").addEventListener("click", loginGuest);
+      document.getElementById("login-guest-btn").addEventListener("click", loginGuest);
     </script>
   </body>
 </html>

@@ -1,23 +1,21 @@
-export async function loginGuest() {
-  const nombre = "Invitado"; // puedes hacerlo dinámico si agregas input
+export async function loginGuest(nombre) {
+  try {
+    const res = await fetch("http://localhost:5000/api/guest/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // 🔹 HABILITA EL ENVÍO DE COOKIES
+      body: JSON.stringify({ nombre }),
+    });
 
-  const res = await fetch("http://localhost:5000/api/guest/login", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ nombre }),
-  });
-
-  const data = await res.json();
-
-  if (res.ok) {
-    window.location.href = "home-guest.html";
-  } else {
-    alert(data.error || "Error al iniciar sesión como invitado");
+    const data = await res.json();
+    console.log("Respuesta del servidor:", data);
+  } catch (error) {
+    console.error("Error en login:", error);
   }
 }
+
 
 export async function loginAdmin() {
   const username = document.getElementById("username").value;
