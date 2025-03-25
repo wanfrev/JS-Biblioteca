@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Invitado</title>
-    <link rel="stylesheet" href="styles/login-guest.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/login-guest.css" />
+  </head>
+  <body>
     <div class="login">
-        <div class="login-container">
-            <img src="assets/logoUnir.webp" alt="Logo" class="logo">
-            <button onclick="loginGuest()">Entrar</button>
-            <p><a href="login-admin.html">¿Eres Admin?</a></p>
-        </div>
+      <div class="login-container">
+        <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
+        <button onclick="loginGuest()">Entrar</button>
+        <p><a href="login-admin.html">¿Eres Admin?</a></p>
+      </div>
     </div>
-    <script>
-        function loginGuest() {
-            window.location.href = 'home-guest.html';
-        }
+    <script type="module">
+      import { loginGuest } from "./js/login.js";
+
+      document.querySelector("button").addEventListener("click", loginGuest);
     </script>
-</body>
+  </body>
 </html>
