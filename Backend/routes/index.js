@@ -5,8 +5,13 @@ const adminAuthRoutes = require('./adminAuth');
 const authMiddleware = require('../middlewares/authMiddleware');
 const guestAuthRoutes = require('./guestAuth');
 
+// Aplica el middleware para verificar el token y que sea administrador
+router.use('/admin', authMiddleware.verifyToken, authMiddleware.isAdmin);
 router.use('/admin', adminAuthRoutes);
-router.use('/admin', authMiddleware);
-router.use('/guest', guestAuthRoutes);
+
+// Rutas de guest con verificación de token
+router.use('/guest/login', guestAuthRoutes); // Permite login sin autenticación
+router.use('/guest', authMiddleware.verifyToken, authMiddleware.isGuest, guestAuthRoutes);
+
 
 module.exports = router;
