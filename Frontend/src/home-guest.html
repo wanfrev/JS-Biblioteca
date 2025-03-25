@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Biblioteca Virtual de Tesis - Invitado</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/home-guest.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/home-guest.css" />
+  </head>
+  <body>
     <header>
-        <img src="assets/logoUnir1.webp" alt="Logo" class="logo">
-        <input type="text" id="search" placeholder="Buscar tesis...">
-        <div class="logout-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: #FFF;" onclick="logout()"><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
-        </div>
+      <img src="assets/logoUnir1.webp" alt="Logo" class="logo" />
+      <input type="text" id="search" placeholder="Buscar tesis..." />
+      <div class="logout-icons">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          style="fill: #fff"
+          onclick="logout()"
+        >
+          <path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path>
+          <path
+            d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"
+          ></path>
+        </svg>
+      </div>
     </header>
     <main>
-        <section id="thesis-list">
-            <!-- Las tesis se mostrarán aquí dinámicamente -->
-        </section>
+      <section id="thesis-list" class="container">
+        <div class="thesis">
+          <h3>Titulo de la tesis</h3>
+        </div>
+        <div class="thesis">
+          <h3>Titulo de la tesis</h3>
+        </div>
+      </section>
+      <button id="add-thesis-btn">Agregar Tesis</button>
     </main>
-    <script src="scripts/app.js"></script>
-    <script>
-        function logout() {
-            window.location.href = 'login-guest.html';
-        }
-    </script>
-</body>
+    <script src="scripts/homeLogin.js"></script>
+  </body>
 </html>
