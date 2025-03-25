@@ -12,14 +12,15 @@
         <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
         <input type="text" id="username" placeholder="Username" />
         <input type="password" id="password" placeholder="Password" />
-        <button onclick="loginAdmin()">Entrar</button>
+        <button id="loginButton">Entrar</button>
         <p><a href="login-guest.html">¿Eres Invitado?</a></p>
       </div>
     </div>
     <script type="module">
       import { loginAdmin } from "./js/login.js";
 
-      document.querySelector("button").addEventListener("click", loginAdmin);
+      // Asigna el evento de clic al botón
+      document.getElementById("loginButton").addEventListener("click", loginAdmin);
     </script>
   </body>
 </html>
