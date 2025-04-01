@@ -5,7 +5,7 @@ const { loginSchema } = require("../validators/userValidator");
 const { verifyToken, isAdmin } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
-const SECRET = process.env.JWT_SECRET || "secreto";
+const SECRET = process.env.JWT_SECRET || "mi_secreto_super_seguro";
 
 // Iniciar sesión como administrador
 router.post("/login", async (req, res) => {
@@ -36,14 +36,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    // Enviar la cookie con el token
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false, // Cambiar a true si usas HTTPS
-      sameSite: "Lax",
-    });
-
-    // También enviar el token en el cuerpo de la respuesta
+    // Enviar el token en el cuerpo de la respuesta
     res.json({ mensaje: "Inicio de sesión exitoso", isAdmin: true, token });
   } catch (err) {
     console.error("Error en login:", err);
@@ -58,7 +51,6 @@ router.get("/verify", verifyToken, isAdmin, (req, res) => {
 
 // Cerrar sesión
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
   res.json({ mensaje: "Sesión cerrada correctamente" });
 });
 
