@@ -10,9 +10,9 @@ router.use('/admin/login', adminAuthRoutes);
 router.use('/guest/login', guestAuthRoutes);
 
 // Rutas protegidas para admin
-router.use('/admin', authMiddleware.isAdmin, adminAuthRoutes);
+router.use('/admin', adminAuthRoutes);
 
 // Rutas protegidas para guest
-router.use('/guest', authMiddleware.isGuest, guestAuthRoutes);
+router.use('/guest', guestAuthRoutes);
 
 module.exports = router;
