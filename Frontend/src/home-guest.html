@@ -6,6 +6,7 @@
     <title>Biblioteca Virtual de Tesis - Invitado</title>
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="stylesheet" href="styles/home-guest.css" />
+    <script src="js/app.js" defer></script>
   </head>
   <body>
     <header>
@@ -26,21 +27,12 @@
       </div>
     </header>
     <main>
-      <section id="thesis-list">
-        <!-- Las tesis se mostrarán aquí dinámicamente -->
-      </section>
+      <section id="thesis-list"></section>
     </main>
-    <script type="module">
-      import { verificarSesionInvitado } from "./js/auth.js";
 
-      // Verificar la sesión del invitado
-
-      // Función para cerrar sesión
-      function logout() {
-        window.location.href = "login-guest.html"; // Redirigir al login de invitados
-      }
-
-      // Exponer la función logout al ámbito global
+    <script>
+      import { verificarSesionInvitado, logout } from "./auth/auth.js";
+      verificarSesionInvitado();
       window.logout = logout;
     </script>
   </body>

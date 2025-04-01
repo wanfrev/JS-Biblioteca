@@ -6,6 +6,7 @@
     <title>Biblioteca Virtual de Tesis - Admin</title>
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="stylesheet" href="styles/home-admin.css" />
+    <script src="js/app.js" defer></script>
   </head>
   <body>
     <header>
@@ -26,23 +27,12 @@
       </div>
     </header>
     <main>
-      <section id="thesis-list">
-        <!-- Las tesis se mostrarán aquí dinámicamente -->
-      </section>
+      <section id="thesis-list"></section>
     </main>
-    <script type="module">
-      import { verificarSesionAdmin } from "./js/auth.js";
 
-      // Verificar la sesión del administrador
+    <script>
+      import { verificarSesionAdmin, logout } from "./auth/auth.js";
       verificarSesionAdmin();
-
-      // Función para cerrar sesión
-      function logout() {
-        localStorage.removeItem("token"); // Eliminar el token del localStorage
-        window.location.href = "login-admin.html"; // Redirigir al login de admin
-      }
-
-      // Exponer la función logout al ámbito global
       window.logout = logout;
     </script>
   </body>

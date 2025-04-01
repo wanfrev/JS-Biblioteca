@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Admin</title>
     <link rel="stylesheet" href="styles/login-admin.css" />
+    <script src="js/app.js" defer></script>
   </head>
   <body>
     <div class="login">
       <div class="login-container">
         <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
+        <input type="email" id="admin-email" placeholder="Correo" required />
+        <input type="password" id="admin-password" placeholder="Contraseña" required />
         <button id="loginButton">Entrar</button>
         <p><a href="login-guest.html">¿Eres Invitado?</a></p>
       </div>
     </div>
-    <script type="module">
-      import { loginAdmin } from "./js/login.js";
 
-      // Asigna el evento de clic al botón
+    <script type="module">
+      import { loginAdmin } from "./auth/login.js";
       document.getElementById("loginButton").addEventListener("click", loginAdmin);
     </script>
+    
   </body>
 </html>
