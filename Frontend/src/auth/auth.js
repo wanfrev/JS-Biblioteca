@@ -3,9 +3,7 @@ export async function verificarSesionAdmin() {
     const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:5000/api/admin/verify", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) {
@@ -21,9 +19,7 @@ export async function verificarSesionInvitado() {
     const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:5000/api/guest/verify", {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) {
@@ -34,16 +30,9 @@ export async function verificarSesionInvitado() {
   }
 }
 
-export async function logout() {
-  await fetch("http://localhost:5000/api/admin/logout", {
-    method: "POST",
-    credentials: "include"
-  }).catch(() => {});
-
-  await fetch("http://localhost:5000/api/guest/logout", {
-    method: "POST",
-    credentials: "include"
-  }).catch(() => {});
-
-  window.location.href = "login-admin.html"; 
+export function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userType");
+  const redirect = location.pathname.includes("admin") ? "login-admin.html" : "login-guest.html";
+  window.location.href = redirect;
 }

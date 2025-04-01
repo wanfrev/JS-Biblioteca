@@ -1,32 +1,15 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const { verifyToken, isGuest } = require('../middlewares/authMiddleware');
-
+const express = require("express");
 const router = express.Router();
-const SECRET = process.env.JWT_SECRET || 'mi_secreto_super_seguro';
+const { verifyToken, isGuest } = require("../middlewares/authMiddleware");
 
-// Login de invitado
-router.post('/login', (req, res) => {
-  const { nombre } = req.body;
-  if (!nombre) return res.status(400).json({ error: 'Nombre es requerido' });
-
-  const token = jwt.sign({ nombre, isAdmin: false }, SECRET, { expiresIn: '1h' });
-
-  res.cookie('token', token, {
-    httpOnly: true,
-    sameSite: 'Lax',
-    secure: false
-  }).json({ mensaje: 'Sesión iniciada como invitado' });
+// Ruta protegida: Verificar sesión activa del invitado
+router.get("/verify", verifyToken, isGuest, (req, res) => {
+  res.json({ mensaje: "Sesión activa como invitado", user: req.user });
 });
 
-// Verificar sesión de invitado
-router.get('/verify', verifyToken, isGuest, (req, res) => {
-  res.json({ mensaje: 'Sesión activa como invitado', user: req.user });
-});
-
-// ✅ Cerrar sesión
-router.post('/logout', (req, res) => {
-  res.clearCookie('token').json({ mensaje: 'Sesión cerrada correctamente' });
+// Ruta protegida: Ejemplo de un dashboard para invitados
+router.get("/dashboard", verifyToken, isGuest, (req, res) => {
+  res.json({ mensaje: "Bienvenido al panel de invitados" });
 });
 
 module.exports = router;
