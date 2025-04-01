@@ -34,9 +34,11 @@
       import { verificarSesionInvitado } from "./js/auth.js";
 
       // Verificar la sesión del invitado
+      verificarSesionInvitado();
 
       // Función para cerrar sesión
       function logout() {
+        localStorage.removeItem("token"); // Eliminar el token del localStorage
         window.location.href = "login-guest.html"; // Redirigir al login de invitados
       }
 
