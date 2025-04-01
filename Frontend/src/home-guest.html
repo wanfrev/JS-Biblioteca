@@ -32,8 +32,9 @@
     </main>
     <script src="scripts/app.js"></script>
     <script type="module">
-      import { verificarSesionInvitado } from "./js/auth.js";
+      import { verificarSesionInvitado, logout } from "./js/auth.js";
       verificarSesionInvitado();
+      window.logout = logout;
     </script>
   </body>
 </html>

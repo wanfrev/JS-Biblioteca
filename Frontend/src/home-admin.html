@@ -31,8 +31,9 @@
       </section>
     </main>
     <script type="module">
-      import { verificarSesionAdmin } from "./js/auth.js";
+      import { verificarSesionAdmin, logout } from "./js/auth.js";
       verificarSesionAdmin();
+      window.logout = logout;
     </script>
   </body>
 </html>

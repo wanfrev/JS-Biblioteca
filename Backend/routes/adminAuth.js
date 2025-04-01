@@ -17,41 +17,37 @@ router.post("/login", async (req, res) => {
   try {
     const [user] = await db.query("SELECT * FROM admin WHERE ad_nom = ?", [username]);
 
-    if (user.length === 0) {
+    if (user.length === 0 || user[0].ad_pass !== password) {
       return res.status(401).json({ error: "Nombre de usuario o contraseña incorrectos" });
     }
 
-    // Comparar la contraseña en texto plano
-    if (password !== user[0].ad_pass) {
-      return res.status(401).json({ error: "Nombre de usuario o contraseña incorrectos" });
-    }
+    const token = jwt.sign({
+      id: user[0].id_admin,
+      username: user[0].ad_nom,
+      isAdmin: true,
+    }, SECRET, { expiresIn: "1h" });
 
-    const token = jwt.sign(
-      {
-        id: user[0].id_admin,
-        username: user[0].ad_nom,
-        isAdmin: true,
-      },
-      SECRET,
-      { expiresIn: "1h" }
-    );
+    // ✅ Enviar cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "Lax",
+      secure: false // pon true si usas HTTPS
+    }).json({ mensaje: "Inicio de sesión exitoso", isAdmin: true });
 
-    // Enviar el token en el cuerpo de la respuesta
-    res.json({ mensaje: "Inicio de sesión exitoso", isAdmin: true, token });
   } catch (err) {
     console.error("Error en login:", err);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
-// Verificar sesión activa del admin
+// ✅ Verificar sesión activa
 router.get("/verify", verifyToken, isAdmin, (req, res) => {
   res.json({ mensaje: "Sesión activa como administrador", user: req.user });
 });
 
-// Cerrar sesión
+// ✅ Cerrar sesión
 router.post("/logout", (req, res) => {
-  res.json({ mensaje: "Sesión cerrada correctamente" });
+  res.clearCookie("token").json({ mensaje: "Sesión cerrada correctamente" });
 });
 
 module.exports = router;

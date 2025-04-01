@@ -27,3 +27,17 @@ export async function verificarSesionInvitado() {
     window.location.href = "login-guest.html";
   }
 }
+
+export async function logout() {
+  await fetch("http://localhost:5000/api/admin/logout", {
+    method: "POST",
+    credentials: "include"
+  }).catch(() => {});
+
+  await fetch("http://localhost:5000/api/guest/logout", {
+    method: "POST",
+    credentials: "include"
+  }).catch(() => {});
+
+  window.location.href = "login-admin.html"; 
+}
