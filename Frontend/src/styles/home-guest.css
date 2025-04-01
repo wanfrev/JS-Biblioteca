@@ -11,7 +11,6 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  box-shadow: 0 8px 16px rgba(0, 45, 107, 0.649); /* Sombra en la parte inferior */
 }
 
 header .logo {
@@ -24,11 +23,6 @@ header input {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background: none;
-  border: none;
-  outline: none;
-  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-  color: #fff;
 }
 
 header .logout-icons {
@@ -51,35 +45,20 @@ header .logout-icons svg {
   margin: 60px 250px;
   height: 55vh;
   border-radius: 10px;
-  /* border: 5px solid #284978; */
+  border: 5px solid #284978;
   overflow-y: auto; /* Habilita el scroll vertical */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
 
 /* VISTA DE TESIS */
 
-.thesis {
+.thesis{
   display: flex;
-  flex-direction: column; /* Alinea el contenido en columna */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: flex-start;
+  align-items: center;
   margin: 10px;
-  height: 12rem; /* Ajusta la altura */
-  width: 10rem; /* Ajusta el ancho */
-  border-radius: 20px; /* Bordes redondeados */
-  background-color: #ffffff; /* Fondo blanco */
-  box-shadow: 8px 8px 16px rgba(0, 45, 107, 0.517), -8px -8px 16px rgba(255, 255, 255, 0.7); /* Efecto neumorfismo con tonos de azul */
-  color: #284978; /* Texto azul para contraste */
-  cursor: pointer;
-  transition: all 0.3s ease-in-out; /* Suaviza las transiciones */
-  padding: 1rem; /* Espaciado interno */
-  text-align: center; /* Centra el texto */
+  height: 10rem;
+  border-radius: 10px;
+  border: 5px solid #284978;
+  
 }
-
-.thesis:hover {
-  box-shadow: inset 4px 4px 8px rgba(0, 45, 107, 0.517), inset -4px -4px 8px rgba(255, 255, 255, 0.7); /* Efecto al pasar el mouse */
-  background-color: #f9f9f9; /* Fondo ligeramente más claro al pasar el mouse */
-}
-
-
-
