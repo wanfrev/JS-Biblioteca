@@ -62,3 +62,4 @@ export function filterTesis(career, author, date) {
 document.addEventListener("DOMContentLoaded", () => {
   displayTesis();
 });
+
