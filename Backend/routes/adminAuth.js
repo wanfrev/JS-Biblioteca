@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const db = require("../db/db");
 const { loginSchema } = require("../validators/userValidator");
 const { verifyToken, isAdmin } = require("../middlewares/authMiddleware");
@@ -22,8 +21,8 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Nombre de usuario o contraseña incorrectos" });
     }
 
-    const isMatch = await bcrypt.compare(password, user[0].ad_pass);
-    if (!isMatch) {
+    // Comparar la contraseña en texto plano
+    if (password !== user[0].ad_pass) {
       return res.status(401).json({ error: "Nombre de usuario o contraseña incorrectos" });
     }
 
@@ -37,8 +36,15 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token, { httpOnly: true });
-    res.json({ mensaje: "Inicio de sesión exitoso", isAdmin: true });
+    // Enviar la cookie con el token
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // Cambiar a true si usas HTTPS
+      sameSite: "Lax",
+    });
+
+    // También enviar el token en el cuerpo de la respuesta
+    res.json({ mensaje: "Inicio de sesión exitoso", isAdmin: true, token });
   } catch (err) {
     console.error("Error en login:", err);
     res.status(500).json({ error: "Error interno del servidor" });

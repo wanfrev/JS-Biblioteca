@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 // Configuración de CORS
 app.use(
   cors({
-    origin: ["http://127.0.0.1:5500", "http://localhost:5500"], // Asegúrate de incluir ambas opciones
+    origin: ["http://127.0.0.1:5500"], // Asegúrate de incluir ambas opciones
     credentials: true, // Permite el envío de cookies
   })
 );
