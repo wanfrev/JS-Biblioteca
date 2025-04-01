@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Admin</title>
-    <link rel="stylesheet" href="styles/login-admin.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/login-admin.css" />
+  </head>
+  <body>
     <div class="login">
-        <div class="login-container">
-            <img src="assets/logoUnir.webp" alt="Logo" class="logo">
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="loginAdmin()">Entrar</button>
-            <p><a href="login-guest.html">¿Eres Invitado?</a></p>
-        </div>
+      <div class="login-container">
+        <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="loginButton">Entrar</button>
+        <p><a href="login-guest.html">¿Eres Invitado?</a></p>
+      </div>
     </div>
-    <script src="scripts/loginAdmin.js"></script>
-</body>
+    <script type="module">
+      import { loginAdmin } from "./js/auth.js";
+      document.getElementById("loginButton").addEventListener("click", loginAdmin);
+    </script>
+  </body>
 </html>
