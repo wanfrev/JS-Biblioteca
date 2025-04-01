@@ -13,6 +13,7 @@ export async function loginGuest() {
     const data = await response.json();
 
     if (response.ok) {
+      localStorage.setItem("token", data.token); // Guarda el token en localStorage
       window.location.href = "home-guest.html"; // Redirigir al home de invitados
     } else {
       alert(data.error || "Error al iniciar sesión");
@@ -22,12 +23,9 @@ export async function loginGuest() {
   }
 }
 
-
 export async function loginAdmin() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-
-  console.log("Datos enviados:", { username, password });
 
   try {
     const response = await fetch("http://localhost:5000/api/admin/login", {
