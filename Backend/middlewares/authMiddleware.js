@@ -3,7 +3,8 @@ const SECRET = process.env.JWT_SECRET || 'mi_secreto_super_seguro';
 
 // Verifica que haya un token válido
 function verifyToken(req, res, next) {
-  const token = req.cookies.token;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1]; // Leer el token del encabezado Authorization
 
   if (!token) return res.status(401).json({ error: 'Token no proporcionado' });
 

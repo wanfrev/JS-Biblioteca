@@ -32,7 +32,18 @@
     </main>
     <script type="module">
       import { verificarSesionAdmin } from "./js/auth.js";
+
+      // Verificar la sesión del administrador
       verificarSesionAdmin();
+
+      // Función para cerrar sesión
+      function logout() {
+        localStorage.removeItem("token"); // Eliminar el token del localStorage
+        window.location.href = "login-admin.html"; // Redirigir al login de admin
+      }
+
+      // Exponer la función logout al ámbito global
+      window.logout = logout;
     </script>
   </body>
 </html>

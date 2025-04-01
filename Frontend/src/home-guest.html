@@ -30,10 +30,18 @@
         <!-- Las tesis se mostrarán aquí dinámicamente -->
       </section>
     </main>
-    <script src="scripts/app.js"></script>
     <script type="module">
       import { verificarSesionInvitado } from "./js/auth.js";
-      verificarSesionInvitado();
+
+      // Verificar la sesión del invitado
+
+      // Función para cerrar sesión
+      function logout() {
+        window.location.href = "login-guest.html"; // Redirigir al login de invitados
+      }
+
+      // Exponer la función logout al ámbito global
+      window.logout = logout;
     </script>
   </body>
 </html>

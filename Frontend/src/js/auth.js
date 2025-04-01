@@ -1,8 +1,11 @@
 export async function verificarSesionAdmin() {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:5000/api/admin/verify", {
       method: "GET",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!res.ok) {
@@ -15,9 +18,12 @@ export async function verificarSesionAdmin() {
 
 export async function verificarSesionInvitado() {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:5000/api/guest/verify", {
       method: "GET",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!res.ok) {
