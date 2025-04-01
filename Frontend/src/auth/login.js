@@ -1,14 +1,11 @@
 // login.js - Funciones para login de guest y admin
 
 export async function loginGuest() {
-  const nombre = document.getElementById("guest-email").value || "Invitado";
-  const password = document.getElementById("guest-password").value || "";
-
   try {
     const response = await fetch("http://localhost:5000/api/guest/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, password }),
+      body: JSON.stringify({ nombre: "Invitado" }), // Enviar un nombre genérico
     });
 
     const data = await response.json();
@@ -27,8 +24,8 @@ export async function loginGuest() {
 }
 
 export async function loginAdmin() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("admin-email").value; // Cambiado de "username" a "admin-email"
+  const password = document.getElementById("admin-password").value; // Cambiado de "password" a "admin-password"
 
   try {
     const response = await fetch("http://localhost:5000/api/admin/login", {

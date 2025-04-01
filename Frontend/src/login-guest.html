@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Invitado</title>
     <link rel="stylesheet" href="styles/login-guest.css" />
-    <script src="js/app.js" defer></script>
+    <script type="module" src="js/app.js"></script>
   </head>
   <body>
     <div class="login">
       <div class="login-container">
         <img src="assets/logoUnir.webp" alt="Logo" class="logo" />
-        <input type="email" id="guest-email" placeholder="Correo" required />
-        <input type="password" id="guest-password" placeholder="Contraseña" required />
         <button id="login-guest-btn">Entrar</button>
         <p><a href="login-admin.html">¿Eres Admin?</a></p>
       </div>
@@ -22,6 +20,5 @@
       import { loginGuest } from "./auth/login.js";
       document.getElementById("login-guest-btn").addEventListener("click", loginGuest);
     </script>
-    
   </body>
 </html>
