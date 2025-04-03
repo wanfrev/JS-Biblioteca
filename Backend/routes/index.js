@@ -4,8 +4,6 @@ const router = express.Router();
 const adminAuthRoutes = require('./adminAuth');
 const guestAuthRoutes = require('./guestAuth');
 const authMiddleware = require('../middlewares/authMiddleware');
-const uploadThesisRoutes = require("./uploadThesis");
-const carrerasRoutes = require("./carreras");
 
 // Rutas de login (sin autenticación)
 router.use('/admin/login', require('./loginAdmin')); // Login de admin
@@ -16,8 +14,5 @@ router.use('/admin', authMiddleware.verifyToken, authMiddleware.isAdmin, adminAu
 
 // Rutas protegidas para guest
 router.use('/guest', authMiddleware.verifyToken, authMiddleware.isGuest, guestAuthRoutes);
-
-router.use("/upload", uploadThesisRoutes);
-router.use("/carreras", carrerasRoutes);
 
 module.exports = router;
