@@ -27,13 +27,18 @@
       </div>
     </header>
     <main>
-      <section id="thesis-list"></section>
+      <section id="thesis-list" class="container"></section>
+      <button id="add-thesis-btn">Agregar Tesis</button>
     </main>
 
     <script type="module">
       import { verificarSesionAdmin, logout } from "./auth/auth.js";
       verificarSesionAdmin();
       window.logout = logout; // Exponer la función logout al ámbito global
+      // Redirigir al formulario de subida al hacer clic en el botón
+      document.getElementById('add-thesis-btn').addEventListener('click', () => {
+        window.location.href = 'upload-form.html'; // Redirige a la página del formulario
+      });
     </script>
   </body>
 </html>

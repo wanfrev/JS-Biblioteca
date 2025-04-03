@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: linear-gradient(90deg, #284978 1%, #133D79 39%, #002F71 71%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header .logo {
+  width: 50px;
+  height: auto;
+}
+
+header input {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+header .logout-icons {
+  display: flex;
+  gap: 10px;
+}
+
+header .logout-icons svg {
+  fill: white;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+}
+
+main {
+  margin: 15px auto 0;
+  width: 100%;
+  max-width: 600px;
+  background-color: #eaeaea;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+form label {
+  font-weight: bold;
+  color: #333333;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 15px; /* Agrega espacio interno horizontal y vertical */
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+form button {
+  width: 100%;
+  padding: 15px;
+  background-color: #002F71;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #004ab3;
+}
