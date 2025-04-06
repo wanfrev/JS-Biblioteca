@@ -80,4 +80,46 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Ruta para editar una tesis
+router.put("/:id", upload.single("documento"), async (req, res) => {
+  const { id } = req.params;
+  const { titulo, fecha_pub, des_tesis, id_carrera, nom_autor } = req.body;
+  const documento = req.file ? req.file.filename : null;
+
+  console.log("Datos recibidos para editar:", req.body);
+  console.log("Archivo subido:", req.file);
+
+  try {
+    // Verificar si el autor ya existe
+    let [autor] = await db.query("SELECT id_autor FROM autores WHERE nom_autor = ?", [nom_autor]);
+    console.log("Autor encontrado o creado:", autor);
+
+    if (!autor.length) {
+      // Insertar el autor si no existe
+      const [result] = await db.query("INSERT INTO autores (nom_autor) VALUES (?)", [nom_autor]);
+      console.log("Resultado de la inserción del autor:", result);
+      autor = { id_autor: result.insertId };
+    } else {
+      autor = autor[0];
+    }
+
+    // Actualizar la tesis
+    const updateQuery = `
+      UPDATE tesis
+      SET titulo = ?, fecha_pub = ?, des_tesis = ?, id_carrera = ?, documento = ?
+      WHERE id_tesis = ?
+    `;
+    const updateValues = [titulo, fecha_pub, des_tesis, id_carrera, documento || null, id];
+    await db.query(updateQuery, updateValues);
+
+    // Actualizar la relación autor-tesis
+    await db.query("UPDATE autor_tesis SET id_autor = ? WHERE id_tesis = ?", [autor.id_autor, id]);
+
+    res.status(200).json({ mensaje: "Tesis actualizada exitosamente" });
+  } catch (error) {
+    console.error("Error al editar la tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 module.exports = router;

@@ -43,9 +43,26 @@ header .logout-icons svg {
   height: 42px;
 }
 
-.container {
+.header-icons {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+  gap: 15px; /* Espaciado entre los íconos */
+  align-items: center;
+}
+
+.add-thesis-icon {
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-thesis-icon:hover {
+  transform: scale(1.2); /* Aumenta ligeramente el tamaño al pasar el mouse */
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 3 columnas de igual tamaño */
   align-items: flex-start;
   justify-content: flex-start;
   margin: 60px 250px;
@@ -55,7 +72,6 @@ header .logout-icons svg {
   overflow-y: auto; /* Habilita el scroll vertical */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
-
 /* VISTA DE TESIS */
 
 .thesis {
@@ -115,4 +131,51 @@ header .logout-icons svg {
   background-color: #f9f9f9; /* Fondo ligeramente más claro al pasar el mouse */
 }
 
+.details-container {
+  width: 25%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
 
+.details-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #284978;
+}
+
+#thesis-details {
+  font-size: 1rem;
+  color: #333;
+}
+
+#thesis-details p {
+  margin: 10px 0;
+}
+
+.edit-button {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  background-color: #284978;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #133d79;
+}
