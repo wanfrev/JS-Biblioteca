@@ -1,16 +1,10 @@
 body {
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-rows: auto 1fr; /* Header ocupa su altura, el resto se adapta */
-  grid-template-columns: 1fr; /* Una sola columna para el body */
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow: hidden; /* Evita scroll innecesario */
+  overflow-y: hidden;
 }
 
 header {
-  grid-row: 1; /* Header en la primera fila */
-  grid-column: 1; /* Ocupa toda la columna */
   background: linear-gradient(90deg, #284978 1%, #133D79 39%, #002F71 71%);
   color: white;
   display: flex;
@@ -18,13 +12,6 @@ header {
   align-items: center;
   padding: 10px 20px;
   box-shadow: 0 8px 16px rgba(0, 45, 107, 0.649); /* Sombra en la parte inferior */
-}
-
-main {
-  display: grid;
-  grid-template-columns: 25% 1fr; /* Sidebar ocupa el 25%, el contenido principal el resto */
-  grid-template-rows: 1fr; /* Una sola fila */
-  height: calc(100vh - 70px); /* Altura total menos la altura del header */
 }
 
 header .logo {
@@ -44,59 +31,43 @@ header input {
   color: #fff;
 }
 
-header .header-icons svg {
+header .logout-icons {
+  display: flex;
+  gap: 10px;
+}
+
+header .logout-icons svg {
+  fill: white;
   cursor: pointer;
   width: 42px;
   height: 42px;
-  border-radius: 50%; /* Bordes redondeados */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza las transiciones */
 }
 
-header .header-icons svg:hover {
-  transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
-  }
-
-.details-container {
-  grid-column: 1; /* Sidebar en la primera columna */
-  grid-row: 1; /* Ocupa toda la fila */
-  background-color: #f4f4f4; /* Fondo gris claro */
-  padding: 20px;
-  overflow-y: auto; /* Habilitar scroll si el contenido es largo */
-  box-sizing: border-box;
-  height: 100%; /* Asegura que ocupe toda la altura del main */
+.header-icons {
+  display: flex;
+  gap: 15px; /* Espaciado entre los íconos */
+  align-items: center;
 }
 
-.details-container h2 {
-  font-size: 1.5rem; /* Tamaño del título */
-  font-weight: bold;
-  color: #284978; /* Azul moderno */
-  margin-bottom: 1rem;
-  text-align: left; /* Alinear a la izquierda */
+.add-thesis-icon {
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  transition: transform 0.2s ease-in-out;
 }
 
-.details-container p {
-  font-size: 1rem; /* Tamaño del texto */
-  color: #333; /* Texto más oscuro */
-  line-height: 1.6; /* Espaciado entre líneas */
-  margin-bottom: 1rem;
-  text-align: left; /* Alinear a la izquierda */
-}
-
-.details-container #thesis-details {
-  background-color: transparent; /* Fondo transparente */
-  padding: 0; /* Sin padding adicional */
-  text-align: left; /* Alinear a la izquierda */
-}
-
-.details-container #thesis-details p {
-  font-size: 1rem;
-  color: #555; /* Texto gris */
-  margin: 0;
+.add-thesis-icon:hover {
+  transform: scale(1.2); /* Aumenta ligeramente el tamaño al pasar el mouse */
 }
 
 .container {
+<<<<<<< HEAD
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 3 columnas de igual tamaño */
+=======
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+>>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
   align-items: flex-start;
   justify-content: flex-start;
   margin: 60px 250px;
@@ -105,62 +76,58 @@ header .header-icons svg:hover {
   /* border: 5px solid #284978; */
   overflow-y: auto; /* Habilita el scroll vertical */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
 }
 /* VISTA DE TESIS */
 
 .thesis {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 15px;
-  height: 16rem; /* Ajusta la altura */
-  width: 14rem; /* Ajusta el ancho */
-  border-radius: 20px; /* Bordes redondeados */
-  background-color: #f0f0f3; /* Fondo claro para el efecto neumórfico */
-  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.15), -8px -8px 15px rgba(255, 255, 255, 0.7); /* Sombras para el efecto */
-  color: #333; /* Texto más oscuro para mejor contraste */
+  flex-direction: column; /* Alinea el contenido en columna */
+  justify-content: space-between; /* Espaciado uniforme entre los elementos */
+  align-items: center; /* Centra el contenido horizontalmente */
+  margin: 15px; /* Espaciado entre las "cards" */
+  height: 14rem; /* Ajusta la altura */
+  width: 12rem; /* Ajusta el ancho */
+  border-radius: 15px; /* Bordes redondeados */
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.7); /* Efecto neumorfismo */
+  color: #284978; /* Texto azul para contraste */
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza las transiciones */
-  padding: 1rem;
-  text-align: center;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.thesis:hover {
-  transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.8); /* Sombras más pronunciadas */
+  transition: all 0.3s ease-in-out; /* Suaviza las transiciones */
+  padding: 1rem; /* Espaciado interno */
+  text-align: center; /* Centra el texto */
+  overflow: hidden; /* Evita que el contenido se desborde */
+  box-sizing: border-box; /* Incluye el padding en el tamaño total */
 }
 
 .thesis h3 {
-  font-size: 1.2rem; /* Tamaño del título más grande */
+  font-size: 1rem; /* Tamaño del título */
   font-weight: bold;
-  margin: 0.5rem 0;
-  color: #284978; /* Azul para el título */
+  margin: 0.5rem 0; /* Espaciado superior e inferior */
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: hidden; /* Evita que el texto se desborde */
+  text-overflow: ellipsis; /* Agrega "..." si el texto es muy largo */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .thesis p {
-  font-size: 1rem; /* Tamaño del texto */
-  margin: 0.5rem 0;
-  color: #555; /* Texto gris para subtítulos */
+  font-size: 0.9rem; /* Tamaño del texto */
+  margin: 0.3rem 0; /* Espaciado entre párrafos */
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: hidden; /* Evita que el texto se desborde */
+  text-overflow: ellipsis; /* Agrega "..." si el texto es muy largo */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .thesis a {
-  font-size: 0.9rem;
-  color: #007bff; /* Azul moderno para enlaces */
-  text-decoration: none;
-  margin-top: 0.5rem;
-  transition: color 0.3s ease; /* Suaviza el cambio de color */
+  font-size: 0.8rem; /* Tamaño del enlace */
+  color: #284978; /* Color del enlace */
+  text-decoration: none; /* Quitar subrayado */
+  margin-top: 0.5rem; /* Espaciado superior */
+  word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
 }
 
 .thesis a:hover {
@@ -202,6 +169,7 @@ header .header-icons svg:hover {
   margin: 10px 0;
 }
 
+<<<<<<< HEAD
 .edit-button {
   position: fixed;
   top: 50%;
@@ -222,3 +190,6 @@ header .header-icons svg:hover {
   background-color: #133d79;
 
 }
+=======
+
+>>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
