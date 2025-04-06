@@ -17,28 +17,51 @@ const tesis = [
   },
 ];
 
-export function displayTesis(filter = {}) {
+export async function fetchTesis() {
+  try {
+    const response = await fetch("http://localhost:5000/api/upload"); // Cambia la URL si es necesario
+    if (!response.ok) {
+      throw new Error("Error al obtener las tesis");
+    }
+    const tesis = await response.json();
+    return tesis;
+  } catch (error) {
+    console.error("Error al obtener las tesis:", error);
+    return [];
+  }
+}
+
+export async function displayTesis(filter = {}) {
   const tesisContainer = document.getElementById("thesis-list");
   if (!tesisContainer) return;
 
   tesisContainer.innerHTML = ""; // Limpiar el contenedor antes de renderizar
 
+  const tesis = await fetchTesis(); // Obtener las tesis desde el backend
+  console.log("Tesis obtenidas:", tesis); // Depuración
+
   const filteredTesis = tesis.filter(
     (t) =>
-      (!filter.career || t.career === filter.career) &&
-      (!filter.author || t.author === filter.author) &&
-      (!filter.date || t.date === filter.date)
+      (!filter.career || t.carrera === filter.career) &&
+      (!filter.author || t.autor === filter.author) &&
+      (!filter.date || t.fecha_pub === filter.date)
   );
 
   filteredTesis.forEach((t) => {
+    const fechaFormateada = new Date(t.fecha_pub).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  
     const tesisElement = document.createElement("div");
     tesisElement.className = "thesis";
     tesisElement.innerHTML = `
-      <h3>${t.title}</h3>
-      <p>Autor: ${t.author}</p>
-      <p>Carrera: ${t.career}</p>
-      <p>Fecha: ${t.date}</p>
-      <a href="${t.pdf}" target="_blank">Ver PDF</a>
+      <h3>${t.titulo}</h3>
+      <p>Autor: ${t.autor || "Desconocido"}</p>
+      <p>Carrera: ${t.carrera || "Sin carrera"}</p>
+      <p>Fecha: ${fechaFormateada}</p>
+      <a href="http://localhost:5000/upload/${t.documento}" target="_blank">Ver PDF</a>
     `;
     tesisContainer.appendChild(tesisElement);
   });

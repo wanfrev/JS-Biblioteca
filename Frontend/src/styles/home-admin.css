@@ -43,6 +43,23 @@ header .logout-icons svg {
   height: 42px;
 }
 
+.header-icons {
+  display: flex;
+  gap: 15px; /* Espaciado entre los íconos */
+  align-items: center;
+}
+
+.add-thesis-icon {
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-thesis-icon:hover {
+  transform: scale(1.2); /* Aumenta ligeramente el tamaño al pasar el mouse */
+}
+
 .container {
   display: flex;
   flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
@@ -55,7 +72,6 @@ header .logout-icons svg {
   overflow-y: auto; /* Habilita el scroll vertical */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
-
 /* VISTA DE TESIS */
 
 .thesis {
