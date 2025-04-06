@@ -93,8 +93,9 @@ export function displayFilteredTesis(filteredTesis) {
 
 function displayThesisDetails(tesis) {
   const detailsContainer = document.getElementById("thesis-details");
+  const editButton = document.getElementById("edit-button");
 
-  if (!detailsContainer) return;
+  if (!detailsContainer || !editButton) return;
 
   const fechaFormateada = new Date(tesis.fecha_pub).toLocaleDateString("es-ES", {
     year: "numeric",
@@ -110,6 +111,23 @@ function displayThesisDetails(tesis) {
     <p><strong>Descripción:</strong> ${tesis.des_tesis}</p>
     <a href="http://localhost:5000/upload/${tesis.documento}" target="_blank">Ver PDF</a>
   `;
+
+  // Mostrar el botón de "Editar"
+  editButton.style.display = "block";
+
+  // Configurar el evento onclick para redirigir al formulario de edición
+  editButton.onclick = () => {
+    const queryParams = new URLSearchParams({
+      id: tesis.id_tesis,
+      titulo: tesis.titulo,
+      autor: tesis.autor,
+      carrera: tesis.carrera,
+      fecha_pub: tesis.fecha_pub,
+      descripcion: tesis.des_tesis,
+    });
+
+    window.location.href = `upload-form.html?${queryParams.toString()}`;
+  };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
