@@ -171,8 +171,9 @@ main {
 /* Edit Button */
 .edit-button {
   position: fixed;
-  top: 50%;
+  top: 15%;
   right: 20px;
+  width: 100px;
   transform: translateY(-50%);
   padding: 10px 20px;
   background-color: #284978;
@@ -187,4 +188,25 @@ main {
 
 .edit-button:hover {
   background-color: #133d79;
+}
+
+.delete-button {
+  position: fixed;
+  top: 20%;
+  right: 20px;
+  width: 100px;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
 }

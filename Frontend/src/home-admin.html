@@ -38,6 +38,7 @@
           viewBox="0 0 24 24"
           style="fill: #fff"
           onclick="logout()"
+          class="add-thesis-icon"
         >
           <path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path>
           <path
@@ -55,6 +56,7 @@
       </section>
       <section id="thesis-list" class="container"></section>
       <button id="edit-button" class="edit-button" style="display: none;">Editar</button>
+      <button id="delete-button" class="delete-button" style="display: none;">Eliminar</button>
     </main>
     <script type="module">
       import { verificarSesionAdmin, logout } from "./auth/auth.js";
