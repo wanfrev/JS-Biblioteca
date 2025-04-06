@@ -31,12 +31,12 @@ header input {
   color: #fff;
 }
 
-header .logout-icons {
+header .header-icons {
   display: flex;
   gap: 10px;
 }
 
-header .logout-icons svg {
+header .header-icons svg {
   fill: white;
   cursor: pointer;
   width: 42px;

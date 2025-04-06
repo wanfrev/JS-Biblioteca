@@ -69,7 +69,7 @@ function displayThesisDetails(tesis) {
     <p><strong>Autor:</strong> ${tesis.autor || "Desconocido"}</p>
     <p><strong>Carrera:</strong> ${tesis.carrera || "Sin carrera"}</p>
     <p><strong>Fecha de Publicación:</strong> ${fechaFormateada}</p>
-    <p><strong>Descripción:</strong> ${tesis.des_tesis}</p>
+    <p><strong>Descripción:</strong> ${tesis.des_tesis || "Sin descripción"}</p>
     <a href="http://localhost:5000/upload/${tesis.documento}" target="_blank">Ver PDF</a>
   `;
 }
