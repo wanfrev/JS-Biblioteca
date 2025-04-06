@@ -61,13 +61,8 @@ header .logout-icons svg {
 }
 
 .container {
-<<<<<<< HEAD
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 3 columnas de igual tamaño */
-=======
-  display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
->>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
   align-items: flex-start;
   justify-content: flex-start;
   margin: 60px 250px;
@@ -76,10 +71,6 @@ header .logout-icons svg {
   /* border: 5px solid #284978; */
   overflow-y: auto; /* Habilita el scroll vertical */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
 }
 /* VISTA DE TESIS */
 
@@ -169,7 +160,6 @@ header .logout-icons svg {
   margin: 10px 0;
 }
 
-<<<<<<< HEAD
 .edit-button {
   position: fixed;
   top: 50%;
@@ -188,8 +178,4 @@ header .logout-icons svg {
 
 .edit-button:hover {
   background-color: #133d79;
-
 }
-=======
-
->>>>>>> parent of 61d9337 (Cambios header, sidebar y tesis)
