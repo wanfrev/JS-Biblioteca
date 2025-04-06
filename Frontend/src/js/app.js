@@ -1,22 +1,3 @@
-const tesis = [
-  {
-    id: 1,
-    title: "Tesis de Ejemplo 1",
-    author: "Autor 1",
-    career: "Ingeniería",
-    date: "2023-01-01",
-    pdf: "assets/tesis/example.pdf",
-  },
-  {
-    id: 2,
-    title: "Tesis de Ejemplo 2",
-    author: "Autor 2",
-    career: "Medicina",
-    date: "2023-02-01",
-    pdf: "assets/tesis/example.pdf",
-  },
-];
-
 export async function fetchTesis() {
   try {
     const response = await fetch("http://localhost:5000/api/upload"); // Cambia la URL si es necesario
@@ -88,8 +69,39 @@ export function deleteTesis(id) {
 }
 
 export function searchTesis(query) {
-  const filter = { title: query };
-  displayTesis(filter);
+  // Filtrar las tesis por título que contenga el texto ingresado
+  fetchTesis().then((tesis) => {
+    const filteredTesis = tesis.filter((t) =>
+      t.titulo.toLowerCase().includes(query) // Convertir a minúsculas para comparación
+    );
+    displayFilteredTesis(filteredTesis);
+  });
+}
+
+export function displayFilteredTesis(filteredTesis) {
+  const tesisContainer = document.getElementById("thesis-list");
+  if (!tesisContainer) return;
+
+  tesisContainer.innerHTML = ""; // Limpiar el contenedor antes de renderizar
+
+  filteredTesis.forEach((t) => {
+    const fechaFormateada = new Date(t.fecha_pub).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    const tesisElement = document.createElement("div");
+    tesisElement.className = "thesis";
+    tesisElement.innerHTML = `
+      <h3>${t.titulo}</h3>
+      <p>Autor: ${t.autor || "Desconocido"}</p>
+      <p>Carrera: ${t.carrera || "Sin carrera"}</p>
+      <p>Fecha: ${fechaFormateada}</p>
+      <a href="http://localhost:5000/upload/${t.documento}" target="_blank">Ver PDF</a>
+    `;
+    tesisContainer.appendChild(tesisElement);
+  });
 }
 
 export function filterTesis(career, author, date) {
@@ -100,6 +112,15 @@ export function filterTesis(career, author, date) {
 document.addEventListener("DOMContentLoaded", () => {
   // Mostrar las tesis al cargar la página
   displayTesis();
+
+  // Manejar el evento de búsqueda
+  const searchInput = document.getElementById("search");
+  if (searchInput) {
+    searchInput.addEventListener("input", (event) => {
+      const query = event.target.value.toLowerCase(); // Convertir a minúsculas para búsqueda insensible a mayúsculas
+      searchTesis(query);
+    });
+  }
 
   // Manejar el evento del botón "Agregar Tesis"
   const addThesisBtn = document.getElementById("add-thesis-btn");
