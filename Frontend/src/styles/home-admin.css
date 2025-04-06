@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
 }
 
 header {
@@ -10,6 +11,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  box-shadow: 0 8px 16px rgba(0, 45, 107, 0.649); /* Sombra en la parte inferior */
 }
 
 header .logo {
@@ -22,6 +24,11 @@ header input {
   padding: 10px;
   border: none;
   border-radius: 5px;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  color: #fff;
 }
 
 header .logout-icons {
@@ -35,6 +42,7 @@ header .logout-icons svg {
   width: 42px;
   height: 42px;
 }
+
 .header-icons {
   display: flex;
   gap: 15px; /* Espaciado entre los íconos */
@@ -51,6 +59,7 @@ header .logout-icons svg {
 .add-thesis-icon:hover {
   transform: scale(1.2); /* Aumenta ligeramente el tamaño al pasar el mouse */
 }
+
 .container {
   display: flex;
   flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
