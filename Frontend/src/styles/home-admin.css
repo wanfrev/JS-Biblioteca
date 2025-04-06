@@ -131,4 +131,33 @@ header .logout-icons svg {
   background-color: #f9f9f9; /* Fondo ligeramente más claro al pasar el mouse */
 }
 
+.details-container {
+  width: 25%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+.details-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #284978;
+}
+
+#thesis-details {
+  font-size: 1rem;
+  color: #333;
+}
+
+#thesis-details p {
+  margin: 10px 0;
+}
+
 
