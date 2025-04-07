@@ -95,15 +95,11 @@ main {
 }
 
 .container {
-  display: flex;
   grid-column: 2;
   grid-row: 1;
   padding: 20px;
   overflow-y: auto;
   box-sizing: border-box;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
 }
 
 /* Thesis Card */
