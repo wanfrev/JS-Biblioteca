@@ -87,3 +87,14 @@ form button {
 form button:hover {
   background-color: #004ab3;
 }
+
+.add-thesis-icon {
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-thesis-icon:hover {
+  transform: scale(1.2);
+}

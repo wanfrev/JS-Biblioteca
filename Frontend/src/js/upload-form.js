@@ -3,7 +3,7 @@ document.getElementById("upload-form").addEventListener("submit", async (e) => {
 
   const formData = new FormData(e.target);
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const id = params.get("id"); // Detectar si es edición o creación
 
   try {
     const response = await fetch(`http://localhost:5000/api/upload${id ? `/${id}` : ""}`, {
@@ -14,9 +14,9 @@ document.getElementById("upload-form").addEventListener("submit", async (e) => {
     const data = await response.json();
 
     if (response.ok) {
-      alert(data.mensaje);
+      alert(data.mensaje); // Mostrar mensaje de éxito
       e.target.reset(); // Limpiar el formulario
-      window.location.href = "home-admin.html"; // Redirigir al listado
+      window.location.href = "home-admin.html"; // Redirigir al home-admin
     } else {
       alert(data.error || "Error al guardar la tesis");
     }

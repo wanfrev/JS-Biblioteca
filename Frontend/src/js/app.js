@@ -93,9 +93,7 @@ export function displayFilteredTesis(filteredTesis) {
 
 function displayThesisDetails(tesis) {
   const detailsContainer = document.getElementById("thesis-details");
-  const editButton = document.getElementById("edit-button");
-
-  if (!detailsContainer || !editButton) return;
+  if (!detailsContainer) return;
 
   const fechaFormateada = new Date(tesis.fecha_pub).toLocaleDateString("es-ES", {
     year: "numeric",
@@ -112,22 +110,57 @@ function displayThesisDetails(tesis) {
     <a href="http://localhost:5000/upload/${tesis.documento}" target="_blank">Ver PDF</a>
   `;
 
-  // Mostrar el botón de "Editar"
-  editButton.style.display = "block";
+  // Detectar si estamos en home-admin.html
+  const currentPage = getCurrentPage();
+  if (currentPage === "home-admin.html") {
+    const editButton = document.getElementById("edit-button");
+    const deleteButton = document.getElementById("delete-button");
 
-  // Configurar el evento onclick para redirigir al formulario de edición
-  editButton.onclick = () => {
-    const queryParams = new URLSearchParams({
-      id: tesis.id_tesis,
-      titulo: tesis.titulo,
-      autor: tesis.autor,
-      carrera: tesis.carrera,
-      fecha_pub: tesis.fecha_pub,
-      descripcion: tesis.des_tesis,
-    });
+    if (editButton && deleteButton) {
+      // Mostrar y configurar el botón de "Editar"
+      editButton.style.display = "block";
+      editButton.onclick = () => {
+        const queryParams = new URLSearchParams({
+          id: tesis.id_tesis,
+          titulo: tesis.titulo,
+          autor: tesis.autor,
+          carrera: tesis.carrera,
+          fecha_pub: tesis.fecha_pub,
+          descripcion: tesis.des_tesis,
+        });
 
-    window.location.href = `upload-form.html?${queryParams.toString()}`;
-  };
+        window.location.href = `upload-form.html?${queryParams.toString()}`;
+      };
+
+      // Mostrar y configurar el botón de "Eliminar"
+      deleteButton.style.display = "block";
+      deleteButton.onclick = async () => {
+        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar la tesis "${tesis.titulo}"?`);
+        if (confirmDelete) {
+          try {
+            const response = await fetch(`http://localhost:5000/api/upload/${tesis.id_tesis}`, {
+              method: "DELETE",
+            });
+            if (response.ok) {
+              alert("Tesis eliminada exitosamente.");
+              displayTesis(); // Actualizar la lista de tesis
+            } else {
+              alert("Error al eliminar la tesis.");
+            }
+          } catch (error) {
+            console.error("Error al eliminar la tesis:", error);
+            alert("Error al eliminar la tesis.");
+          }
+        }
+      };
+    }
+  }
+}
+
+function getCurrentPage() {
+  const path = window.location.pathname; // Obtiene la ruta actual
+  const page = path.split("/").pop(); // Obtiene el nombre del archivo (por ejemplo, "home-guest.html")
+  return page;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
