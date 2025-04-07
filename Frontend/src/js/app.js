@@ -1,6 +1,7 @@
-export async function fetchTesis() {
+export async function fetchTesis(filters = {}) {
   try {
-    const response = await fetch("http://localhost:5000/api/upload");
+    const queryParams = new URLSearchParams(filters).toString();
+    const response = await fetch(`http://localhost:5000/api/upload?${queryParams}`);
     if (!response.ok) {
       throw new Error("Error al obtener las tesis");
     }
@@ -18,7 +19,7 @@ export async function displayTesis(filter = {}) {
 
   tesisContainer.innerHTML = "";
 
-  const tesis = await fetchTesis();
+  const tesis = await fetchTesis(filter);
   console.log("Tesis obtenidas:", tesis);
 
   const filteredTesis = tesis.filter(
@@ -163,6 +164,32 @@ function getCurrentPage() {
   return page;
 }
 
+export async function loadCarreras() {
+  const carreraSelect = document.getElementById("filter-carrera");
+
+  try {
+    const response = await fetch("http://localhost:5000/api/carreras");
+    if (!response.ok) {
+      throw new Error("Error al obtener las carreras");
+    }
+
+    const carreras = await response.json();
+
+    // Limpiar las opciones existentes
+    carreraSelect.innerHTML = '<option value="">Carrera</option>';
+
+    // Agregar las opciones dinámicas
+    carreras.forEach((carrera) => {
+      const option = document.createElement("option");
+      option.value = carrera.car_nom; // Usar el nombre de la carrera como valor
+      option.textContent = carrera.car_nom; // Mostrar el nombre de la carrera
+      carreraSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error al obtener las carreras:", error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   displayTesis();
 
@@ -173,4 +200,17 @@ document.addEventListener("DOMContentLoaded", () => {
       searchTesis(query);
     });
   }
+
+  document.getElementById("filters-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const carrera = document.getElementById("filter-carrera").value;
+    const autor = document.getElementById("filter-autor").value;
+    const fecha = document.getElementById("filter-fecha").value;
+    const orden = document.getElementById("filter-orden").value;
+
+    displayTesis({ carrera, autor, fecha, orden });
+  });
+
+  loadCarreras();
 });

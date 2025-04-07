@@ -63,7 +63,51 @@ router.post("/", upload.single("documento"), async (req, res) => {
   }
 });
 
-// Ruta para obtener todas las tesis
+// Ruta para obtener todas las tesis o aplicar filtros
+router.get("/", async (req, res) => {
+  const { carrera, autor, fecha, orden } = req.query;
+
+  try {
+    let query = `
+      SELECT t.id_tesis, t.titulo, t.fecha_pub, t.des_tesis, c.car_nom AS carrera, a.nom_autor AS autor, t.documento
+      FROM tesis t
+      LEFT JOIN carrera c ON t.id_carrera = c.id_carrera
+      LEFT JOIN autor_tesis at ON t.id_tesis = at.id_tesis
+      LEFT JOIN autores a ON at.id_autor = a.id_autor
+      WHERE 1=1
+    `;
+
+    const params = [];
+
+    if (carrera) {
+      query += " AND c.car_nom = ?";
+      params.push(carrera);
+    }
+
+    if (autor) {
+      query += " AND a.nom_autor LIKE ?";
+      params.push(`%${autor}%`);
+    }
+
+    if (fecha) {
+      query += " AND t.fecha_pub = ?";
+      params.push(fecha);
+    }
+
+    if (orden === "alfabetico") {
+      query += " ORDER BY t.titulo ASC";
+    } else if (orden === "fecha") {
+      query += " ORDER BY t.fecha_pub DESC";
+    }
+
+    const [tesis] = await db.query(query, params);
+    res.json(tesis);
+  } catch (error) {
+    console.error("Error al obtener las tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 // Ruta para obtener todas las tesis o una tesis específica por ID
 router.get("/:id?", async (req, res) => {
   const { id } = req.params;
@@ -102,7 +146,6 @@ router.get("/:id?", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
-
 
 // Ruta para editar una tesis
 router.put("/:id", upload.single("documento"), async (req, res) => {
@@ -160,6 +203,17 @@ router.delete("/:id", async (req, res) => {
     res.status(200).json({ mensaje: "Tesis eliminada exitosamente" });
   } catch (error) {
     console.error("Error al eliminar la tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+// Ruta para obtener todas las carreras
+router.get("/carreras", async (req, res) => {
+  try {
+    const [carreras] = await db.query("SELECT id_carrera, car_nom FROM carrera");
+    res.json(carreras);
+  } catch (error) {
+    console.error("Error al obtener las carreras:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });

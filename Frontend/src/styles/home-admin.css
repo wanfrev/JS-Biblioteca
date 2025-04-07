@@ -7,7 +7,7 @@ body {
 
 /* Header */
 header {
-  background: linear-gradient(90deg, #284978 1%, #133D79 39%, #002F71 71%);
+  background: linear-gradient(90deg, #284978 1%, #133d79 39%, #002f71 71%);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -56,26 +56,79 @@ header .header-icons svg {
   transform: scale(1.2);
 }
 
+/* Contenedor de filtros */
+.filters-container {
+  display: flex;
+
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.filters-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #284978;
+}
+
+/* Estilo del formulario de filtros */
+.filters-container form {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filters-container form input,
+.filters-container form select,
+.filters-container form button {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.filters-container form input,
+.filters-container form select {
+  width: auto; /* Ajustar el ancho automáticamente */
+  min-width: 150px; /* Ancho mínimo para los campos */
+}
+
+.filters-container form button {
+  background-color: #284978;
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.filters-container form button:hover {
+  background-color: #133d79;
+}
+
 /* Main Layout */
 main {
   display: grid;
   grid-template-columns: 25% 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   height: calc(100vh - 70px);
-  margin-top: 70px;
+  margin-top: 20px
 }
 
 .details-container {
-  position: absolute;
-  top: 70px;
-  left: 0;
-  width: 25%;
-  height: calc(100vh - 70px);
+  grid-row: 2;
+  grid-column: 1;
+  height: calc(100vh - 70px - 100px); /* Ajustar altura para incluir filtros */
+  overflow-y: auto;
+  position: relative;
   background-color: #f9f9f9;
   border-right: 1px solid #ddd;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  overflow-y: auto;
   box-sizing: border-box;
 }
 
@@ -104,14 +157,12 @@ main {
 }
 
 .container {
-  display: flex;
+  grid-row: 2;
   grid-column: 2;
-  grid-row: 1;
   padding: 20px;
-  width: 100vh; 
-  height: 80vh;
   overflow-y: auto;
   box-sizing: border-box;
+  display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
 }

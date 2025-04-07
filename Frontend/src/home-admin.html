@@ -48,16 +48,36 @@
       </div>
     </header>
     <main>
+      <section id="filters-container" class="filters-container">
+        <form id="filters-form">
+          <select id="filter-carrera" name="filter-carrera">
+            <option value="">Carrera</option>
+            <!-- Opciones dinámicas -->
+          </select>
+
+          <input type="text" id="filter-autor" name="filter-autor" placeholder="Autor" />
+
+          <input type="date" id="filter-fecha" name="filter-fecha" />
+
+          <select id="filter-orden" name="filter-orden">
+            <option value="alfabetico">Alfabético</option>
+            <option value="fecha">Fecha</option>
+          </select>
+
+          <button type="submit">Filtrar</button>
+        </form>
+      </section>
+
       <section id="details-container" class="details-container">
         <h2>Detalles de la Tesis</h2>
         <div id="thesis-details">
           <p>Selecciona una tesis para ver los detalles.</p>
         </div>
       </section>
+
       <section id="thesis-list" class="container"></section>
       <button id="edit-button" class="edit-button" style="display: none;">Editar</button>
       <button id="delete-button" class="delete-button" style="display: none;">Eliminar</button>
-
     </main>
     <script type="module">
       import { verificarSesionAdmin, logout } from "./auth/auth.js";
