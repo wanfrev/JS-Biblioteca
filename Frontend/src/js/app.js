@@ -40,7 +40,7 @@ export async function displayTesis(filter = {}) {
     tesisElement.innerHTML = `
       <h3>${t.titulo}</h3>
       <p>Autor: ${t.autor || "Desconocido"}</p>
-      <a href="http://localhost:5000/upload/${t.documento}" target="_blank">Ver PDF</a>
+      <a href="http://localhost:5000/api/upload/documento/${t.id_tesis}" target="_blank">Ver PDF</a>
     `;
 
     tesisElement.addEventListener("click", () => {
@@ -80,7 +80,7 @@ export function displayFilteredTesis(filteredTesis) {
     tesisElement.innerHTML = `
       <h3>${t.titulo}</h3>
       <p>Autor: ${t.autor || "Desconocido"}</p>
-      <a href="http://localhost:5000/upload/${t.documento}" target="_blank">Ver PDF</a>
+      <a href="http://localhost:5000/api/upload/documento/${t.id_tesis}" target="_blank">Ver PDF</a>
     `;
 
     tesisElement.addEventListener("click", () => {
@@ -94,8 +94,9 @@ export function displayFilteredTesis(filteredTesis) {
 function displayThesisDetails(tesis) {
   const detailsContainer = document.getElementById("thesis-details");
   const editButton = document.getElementById("edit-button");
+  const deleteButton = document.getElementById("delete-button");
 
-  if (!detailsContainer || !editButton) return;
+  if (!detailsContainer || !editButton || !deleteButton) return;
 
   const fechaFormateada = new Date(tesis.fecha_pub).toLocaleDateString("es-ES", {
     year: "numeric",
@@ -114,8 +115,6 @@ function displayThesisDetails(tesis) {
 
   // Mostrar el botón de "Editar"
   editButton.style.display = "block";
-
-  // Configurar el evento onclick para redirigir al formulario de edición
   editButton.onclick = () => {
     const queryParams = new URLSearchParams({
       id: tesis.id_tesis,
@@ -127,6 +126,28 @@ function displayThesisDetails(tesis) {
     });
 
     window.location.href = `upload-form.html?${queryParams.toString()}`;
+  };
+
+  // Mostrar el botón de "Eliminar"
+  deleteButton.style.display = "block";
+  deleteButton.onclick = async () => {
+    const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar la tesis "${tesis.titulo}"?`);
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/upload/${tesis.id_tesis}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          alert("Tesis eliminada exitosamente.");
+          displayTesis(); // Actualizar la lista de tesis
+        } else {
+          alert("Error al eliminar la tesis.");
+        }
+      } catch (error) {
+        console.error("Error al eliminar la tesis:", error);
+        alert("Error al eliminar la tesis.");
+      }
+    }
   };
 }
 

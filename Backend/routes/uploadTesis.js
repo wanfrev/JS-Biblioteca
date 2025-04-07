@@ -2,25 +2,15 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const db = require("../db/db");
-
 const router = express.Router();
-
-// Configuración de multer para guardar archivos PDF
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../upload"));
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
 
 // Ruta para subir tesis
 router.post("/", upload.single("documento"), async (req, res) => {
   const { titulo, fecha_pub, des_tesis, id_carrera, nom_autor } = req.body;
-  const documento = req.file ? req.file.filename : null;
+  const documento = req.file ? req.file.buffer : null; // Obtener el buffer del archivo
 
   console.log("Datos recibidos del formulario:", req.body);
   console.log("Archivo subido:", req.file);
@@ -37,13 +27,12 @@ router.post("/", upload.single("documento"), async (req, res) => {
     if (!autor.length) {
       // Insertar el autor si no existe
       const [result] = await db.query("INSERT INTO autores (nom_autor) VALUES (?)", [nom_autor]);
-      console.log("Resultado de la inserción del autor:", result);
       autor = { id_autor: result.insertId };
     } else {
       autor = autor[0];
     }
 
-    // Insertar la tesis
+    // Insertar la tesis con el archivo en la base de datos
     const [resultTesis] = await db.query(
       `INSERT INTO tesis (titulo, fecha_pub, des_tesis, id_carrera, id_admin, documento)
        VALUES (?, ?, ?, ?, ?, ?)`,
@@ -51,7 +40,6 @@ router.post("/", upload.single("documento"), async (req, res) => {
     );
 
     const id_tesis = resultTesis.insertId;
-    console.log("ID de la tesis insertada:", id_tesis);
 
     // Relacionar el autor con la tesis
     await db.query("INSERT INTO autor_tesis (id_tesis, id_autor) VALUES (?, ?)", [id_tesis, autor.id_autor]);
@@ -136,6 +124,24 @@ router.delete("/:id", async (req, res) => {
     res.status(200).json({ mensaje: "Tesis eliminada exitosamente" });
   } catch (error) {
     console.error("Error al eliminar la tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+router.get("/documento/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [tesis] = await db.query("SELECT documento FROM tesis WHERE id_tesis = ?", [id]);
+
+    if (tesis.length === 0) {
+      return res.status(404).json({ error: "Documento no encontrado" });
+    }
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.send(tesis[0].documento);
+  } catch (error) {
+    console.error("Error al obtener el documento:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
