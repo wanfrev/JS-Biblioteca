@@ -85,6 +85,15 @@ main {
   color: #284978;
 }
 
+.details-container p {
+  font-size: 1rem;
+  line-height: 1.6; /* Mejora la legibilidad */
+  color: #333;
+  margin-bottom: 15px;
+  text-align: justify; /* Ajusta el texto para que quede justificado */
+  word-wrap: break-word; /* Permite que las palabras largas se ajusten */
+}
+
 #thesis-details {
   font-size: 1rem;
   color: #333;
