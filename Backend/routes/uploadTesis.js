@@ -64,45 +64,21 @@ router.post("/", upload.single("documento"), async (req, res) => {
 });
 
 // Ruta para obtener todas las tesis
-// Ruta para obtener todas las tesis o una tesis específica por ID
-router.get("/:id?", async (req, res) => {
-  const { id } = req.params;
-
+router.get("/", async (req, res) => {
   try {
-    if (id) {
-      // Obtener una tesis específica por ID
-      const [tesis] = await db.query(`
-        SELECT t.id_tesis, t.titulo, t.fecha_pub, t.des_tesis, c.car_nom AS carrera, a.nom_autor AS autor, t.documento
-        FROM tesis t
-        LEFT JOIN carrera c ON t.id_carrera = c.id_carrera
-        LEFT JOIN autor_tesis at ON t.id_tesis = at.id_tesis
-        LEFT JOIN autores a ON at.id_autor = a.id_autor
-        WHERE t.id_tesis = ?
-      `, [id]);
-
-      if (tesis.length === 0) {
-        return res.status(404).json({ error: "Tesis no encontrada" });
-      }
-
-      return res.json(tesis[0]);
-    } else {
-      // Obtener todas las tesis
-      const [tesis] = await db.query(`
-        SELECT t.id_tesis, t.titulo, t.fecha_pub, t.des_tesis, c.car_nom AS carrera, a.nom_autor AS autor, t.documento
-        FROM tesis t
-        LEFT JOIN carrera c ON t.id_carrera = c.id_carrera
-        LEFT JOIN autor_tesis at ON t.id_tesis = at.id_tesis
-        LEFT JOIN autores a ON at.id_autor = a.id_autor
-      `);
-
-      return res.json(tesis);
-    }
+    const [tesis] = await db.query(`
+      SELECT t.id_tesis, t.titulo, t.fecha_pub, t.des_tesis, c.car_nom AS carrera, a.nom_autor AS autor, t.documento
+      FROM tesis t
+      LEFT JOIN carrera c ON t.id_carrera = c.id_carrera
+      LEFT JOIN autor_tesis at ON t.id_tesis = at.id_tesis
+      LEFT JOIN autores a ON at.id_autor = a.id_autor
+    `);
+    res.json(tesis);
   } catch (error) {
     console.error("Error al obtener las tesis:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
-
 
 // Ruta para editar una tesis
 router.put("/:id", upload.single("documento"), async (req, res) => {
