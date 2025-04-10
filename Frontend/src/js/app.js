@@ -54,12 +54,10 @@ export async function displayTesis(filter = {}) {
 
 export function searchTesis(query) {
   console.log("Texto de búsqueda:", query); // Depuración
-  fetchTesis().then((tesis) => {
-    const filteredTesis = tesis.filter((t) =>
-      t.titulo.toLowerCase().includes(query.toLowerCase())
-    );
-    console.log("Tesis filtradas:", filteredTesis); // Depuración
-    displayFilteredTesis(filteredTesis);
+
+  fetchTesis({ query }).then((tesis) => {
+    console.log("Tesis filtradas:", tesis); // Depuración
+    displayFilteredTesis(tesis);
   });
 }
 
@@ -196,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search");
   if (searchInput) {
     searchInput.addEventListener("input", (event) => {
-      const query = event.target.value;
+      const query = event.target.value.trim();
       searchTesis(query);
     });
   }
