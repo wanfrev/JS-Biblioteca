@@ -238,8 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Agregar las tesis eliminadas al modal
       tesisEliminadas.forEach((tesis) => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${tesis.titulo} - ${tesis.fecha_eliminacion}`;
-
+        listItem.textContent = `${tesis.titulo} - ${tesis.fecha_pub}`;
+        
         const restoreButton = document.createElement("button");
         restoreButton.textContent = "Restaurar";
         restoreButton.style.marginLeft = "10px";

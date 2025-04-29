@@ -30,7 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -38,6 +37,11 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.use('/api', routes);
 
+app._router.stack.forEach((middleware) => {
+  if (middleware.route) {
+    console.log(`Ruta registrada: ${middleware.route.path}`);
+  }
+});
 
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
