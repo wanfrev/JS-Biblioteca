@@ -134,13 +134,39 @@ function displayThesisDetails(tesis) {
       // Mostrar y configurar el botón de "Eliminar"
       deleteButton.style.display = "block";
       deleteButton.onclick = async () => {
-        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar la tesis "${tesis.titulo}"?`);
+        const confirmDelete = confirm(
+          `¿Estás seguro de que deseas eliminar la tesis "${tesis.titulo}"?`
+        );
         if (confirmDelete) {
           try {
-            const response = await fetch(`http://localhost:5000/api/upload/${tesis.id_tesis}`, {
-              method: "DELETE",
-            });
+            const response = await fetch(
+              `http://localhost:5000/api/upload/${tesis.id_tesis}`,
+              {
+                method: "DELETE",
+              }
+            );
             if (response.ok) {
+              // Capturar la hora actual
+              const horaEliminacion = new Date().toLocaleTimeString("es-ES", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              });
+
+              // Agregar la tesis eliminada a la lista de eliminadas
+              const tesisEliminada = {
+                ...tesis,
+                horaEliminacion, // Agregar la hora de eliminación
+              };
+
+              // Mostrar la tesis eliminada en el modal
+              deletedThesisList.innerHTML += `
+                <li class="deleted-thesis-item">
+                  <span class="deleted-thesis-title">${tesisEliminada.titulo} - Eliminada a las ${tesisEliminada.horaEliminacion}</span>
+                  <button class="restore-button">Restaurar</button>
+                </li>
+              `;
+
               alert("Tesis eliminada exitosamente.");
               displayTesis(); // Actualizar la lista de tesis
             } else {
@@ -188,6 +214,9 @@ export async function loadCarreras() {
   }
 }
 
+// Asegúrate de que deletedThesisList esté definida en el alcance global o accesible
+const deletedThesisList = document.getElementById("deleted-thesis-list");
+
 document.addEventListener("DOMContentLoaded", () => {
   displayTesis();
 
@@ -216,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("restore-modal");
   const overlay = document.getElementById("modal-overlay");
   const closeModalButton = document.getElementById("close-modal");
-  const deletedThesisList = document.getElementById("deleted-thesis-list");
 
   // Abrir el modal y mostrar el overlay
   restoreButton.addEventListener("click", async () => {
@@ -237,12 +265,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Agregar las tesis eliminadas al modal
       tesisEliminadas.forEach((tesis) => {
+        const fechaFormateada = new Date(tesis.fecha_pub).toLocaleDateString("es-ES", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        // Generar la hora actual (puedes usar un campo de la API si está disponible)
+        const horaEliminacion = new Date().toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "America/Caracas",
+        });
+
         const listItem = document.createElement("li");
-        listItem.textContent = `${tesis.titulo} - ${tesis.fecha_pub}`;
-        
+        listItem.className = "deleted-thesis-item"; // Clase CSS para estilizar el elemento
+        listItem.innerHTML = `
+          <span class="deleted-thesis-title">${tesis.titulo} - ${fechaFormateada} a las ${horaEliminacion}</span>
+        `;
+
         const restoreButton = document.createElement("button");
         restoreButton.textContent = "Restaurar";
-        restoreButton.style.marginLeft = "10px";
+        restoreButton.style.padding = "5px 20px";
+        restoreButton.style.backgroundColor = "#18a642";
+        restoreButton.style.color = "white";
+        restoreButton.style.border = "none";
+        restoreButton.style.borderRadius = "5px";
+        restoreButton.style.cursor = "pointer";
+        restoreButton.style.fontSize = "1rem";
+        restoreButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+        restoreButton.style.transition = "background-color 0.3s ease";
+
+        // Agregar un efecto hover
+        restoreButton.addEventListener("mouseover", () => {
+          restoreButton.style.backgroundColor = "#148c36";
+        });
+        restoreButton.addEventListener("mouseout", () => {
+          restoreButton.style.backgroundColor = "#18a642";
+        });
+
         restoreButton.addEventListener("click", async () => {
           try {
             const restoreResponse = await fetch(
@@ -252,6 +313,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (restoreResponse.ok) {
               alert("Tesis restaurada exitosamente");
               listItem.remove(); // Eliminar la tesis restaurada de la lista
+
+              // Actualizar la lista de tesis en la página principal
+              displayTesis(); // Llama a la función que muestra las tesis
             } else {
               alert("Error al restaurar la tesis");
             }
@@ -285,4 +349,52 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
     overlay.style.display = "none";
   });
+
+  const deleteButton = document.getElementById("delete-button");
+
+  deleteButton.onclick = async () => {
+    const confirmDelete = confirm(
+      `¿Estás seguro de que deseas eliminar la tesis "${tesis.titulo}"?`
+    );
+    if (confirmDelete) {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/upload/${tesis.id_tesis}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
+          // Capturar la hora actual
+          const horaEliminacion = new Date().toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+
+          // Agregar la tesis eliminada a la lista de eliminadas
+          const tesisEliminada = {
+            ...tesis,
+            horaEliminacion, // Agregar la hora de eliminación
+          };
+
+          // Mostrar la tesis eliminada en el modal
+          deletedThesisList.innerHTML += `
+            <li class="deleted-thesis-item">
+              <span class="deleted-thesis-title">${tesisEliminada.titulo} - Eliminada a las ${tesisEliminada.horaEliminacion}</span>
+              <button class="restore-button">Restaurar</button>
+            </li>
+          `;
+
+          alert("Tesis eliminada exitosamente.");
+          displayTesis(); // Actualizar la lista de tesis
+        } else {
+          alert("Error al eliminar la tesis.");
+        }
+      } catch (error) {
+        console.error("Error al eliminar la tesis:", error);
+        alert("Error al eliminar la tesis.");
+      }
+    }
+  };
 });

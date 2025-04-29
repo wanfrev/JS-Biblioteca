@@ -113,6 +113,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// Ruta para obtener todas las tesis eliminadas
+router.get("/eliminadas", async (req, res) => {
+  try {
+    const [tesisEliminadas] = await db.query(`
+      SELECT id_tesis, titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin
+      FROM tesis_eliminadas
+    `);
+
+    console.log("Tesis eliminadas encontradas:", tesisEliminadas);
+
+    res.json(tesisEliminadas);
+  } catch (error) {
+    console.error("Error al obtener las tesis eliminadas:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 // Ruta para obtener todas las tesis o una tesis específica por ID
 router.get("/:id?", async (req, res) => {
   const { id } = req.params;
@@ -252,23 +270,6 @@ router.post("/restaurar/:id", async (req, res) => {
     res.status(200).json({ mensaje: "Tesis restaurada exitosamente" });
   } catch (error) {
     console.error("Error al restaurar la tesis:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-});
-
-// Ruta para obtener todas las tesis eliminadas
-router.get("/eliminadas", async (req, res) => {
-  try {
-    const [tesisEliminadas] = await db.query(`
-      SELECT id_tesis, titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin
-      FROM tesis_eliminadas
-    `);
-
-    console.log("Tesis eliminadas encontradas:", tesisEliminadas);
-
-    res.json(tesisEliminadas);
-  } catch (error) {
-    console.error("Error al obtener las tesis eliminadas:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });

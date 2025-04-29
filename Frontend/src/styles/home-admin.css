@@ -322,7 +322,8 @@ main {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 80%;
-  max-width: 500px;
+  max-width: 1000px;
+  overflow-y: visible;
 }
 
 .modal.show {
@@ -330,8 +331,8 @@ main {
 }
 
 .modal-content {
-  max-height: 70vh;
-  overflow-y: auto;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .close-modal {
@@ -348,3 +349,28 @@ main {
   background-color: #d32f2f;
 }
 
+.deleted-thesis-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+}
+
+.deleted-thesis-item:hover {
+  transform: scale(1.02);
+  background-color: #f1f1f1;
+}
+
+.deleted-thesis-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
