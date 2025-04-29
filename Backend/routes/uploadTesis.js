@@ -194,20 +194,81 @@ router.put("/:id", upload.single("documento"), async (req, res) => {
   }
 });
 
-// Ruta para eliminar una tesis
+// Ruta para eliminar una tesis y respaldarla
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Eliminar la relación autor-tesis
-    await db.query("DELETE FROM autor_tesis WHERE id_tesis = ?", [id]);
+    // Obtener los datos de la tesis antes de eliminarla
+    const [tesis] = await db.query("SELECT * FROM tesis WHERE id_tesis = ?", [id]);
 
-    // Eliminar la tesis
+    if (tesis.length === 0) {
+      return res.status(404).json({ error: "Tesis no encontrada" });
+    }
+
+    const { titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin } = tesis[0];
+
+    // Respaldar los datos en la tabla tesis_eliminadas
+    await db.query(
+      `INSERT INTO tesis_eliminadas (titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin]
+    );
+
+    // Eliminar la tesis de la tabla original
     await db.query("DELETE FROM tesis WHERE id_tesis = ?", [id]);
 
-    res.status(200).json({ mensaje: "Tesis eliminada exitosamente" });
+    res.status(200).json({ mensaje: "Tesis eliminada y respaldada exitosamente" });
   } catch (error) {
     console.error("Error al eliminar la tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+// Ruta para restaurar una tesis eliminada
+router.post("/restaurar/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Obtener los datos de la tesis eliminada
+    const [tesisEliminada] = await db.query("SELECT * FROM tesis_eliminadas WHERE id_tesis = ?", [id]);
+
+    if (tesisEliminada.length === 0) {
+      return res.status(404).json({ error: "Tesis no encontrada en el respaldo" });
+    }
+
+    const { titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin } = tesisEliminada[0];
+
+    // Restaurar la tesis en la tabla original
+    await db.query(
+      `INSERT INTO tesis (titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin]
+    );
+
+    // Eliminar la tesis del respaldo
+    await db.query("DELETE FROM tesis_eliminadas WHERE id_tesis = ?", [id]);
+
+    res.status(200).json({ mensaje: "Tesis restaurada exitosamente" });
+  } catch (error) {
+    console.error("Error al restaurar la tesis:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+// Ruta para obtener todas las tesis eliminadas
+router.get("/eliminadas", async (req, res) => {
+  try {
+    const [tesisEliminadas] = await db.query(`
+      SELECT id_tesis, titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin
+      FROM tesis_eliminadas
+    `);
+
+    console.log("Tesis eliminadas encontradas:", tesisEliminadas);
+
+    res.json(tesisEliminadas);
+  } catch (error) {
+    console.error("Error al obtener las tesis eliminadas:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });

@@ -211,4 +211,78 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loadCarreras();
+
+  const restoreButton = document.getElementById("restore-button");
+  const modal = document.getElementById("restore-modal");
+  const overlay = document.getElementById("modal-overlay");
+  const closeModalButton = document.getElementById("close-modal");
+  const deletedThesisList = document.getElementById("deleted-thesis-list");
+
+  // Abrir el modal y mostrar el overlay
+  restoreButton.addEventListener("click", async () => {
+    console.log("Botón 'Restaurar Tesis' clickeado");
+
+    try {
+      // Llamar a la API para obtener las tesis eliminadas
+      const response = await fetch("http://localhost:5000/api/upload/eliminadas");
+      if (!response.ok) {
+        throw new Error("Error al obtener las tesis eliminadas");
+      }
+
+      const tesisEliminadas = await response.json();
+      console.log("Tesis eliminadas obtenidas:", tesisEliminadas);
+
+      // Limpiar la lista antes de agregar nuevos elementos
+      deletedThesisList.innerHTML = "";
+
+      // Agregar las tesis eliminadas al modal
+      tesisEliminadas.forEach((tesis) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${tesis.titulo} - ${tesis.fecha_eliminacion}`;
+
+        const restoreButton = document.createElement("button");
+        restoreButton.textContent = "Restaurar";
+        restoreButton.style.marginLeft = "10px";
+        restoreButton.addEventListener("click", async () => {
+          try {
+            const restoreResponse = await fetch(
+              `http://localhost:5000/api/upload/restaurar/${tesis.id_tesis}`,
+              { method: "POST" }
+            );
+            if (restoreResponse.ok) {
+              alert("Tesis restaurada exitosamente");
+              listItem.remove(); // Eliminar la tesis restaurada de la lista
+            } else {
+              alert("Error al restaurar la tesis");
+            }
+          } catch (error) {
+            console.error("Error al restaurar la tesis:", error);
+          }
+        });
+
+        listItem.appendChild(restoreButton);
+        deletedThesisList.appendChild(listItem);
+      });
+
+      // Mostrar el modal y el overlay
+      modal.style.display = "block";
+      overlay.style.display = "block";
+    } catch (error) {
+      console.error("Error al cargar tesis eliminadas:", error);
+    }
+  });
+
+  // Cerrar el modal y ocultar el overlay
+  closeModalButton.addEventListener("click", () => {
+    console.log("Botón 'Cerrar' clickeado");
+    modal.style.display = "none";
+    overlay.style.display = "none";
+  });
+
+  // Cerrar el modal al hacer clic en el overlay
+  overlay.addEventListener("click", () => {
+    console.log("Overlay clickeado");
+    modal.style.display = "none";
+    overlay.style.display = "none";
+  });
 });

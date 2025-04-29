@@ -270,3 +270,81 @@ main {
 .delete-button:hover {
   background-color: #c9302c;
 }
+
+.restore-button{
+  position: fixed;
+  top: 26%;
+  right: 20px;
+  width: 100px;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  background-color: #18a642;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.restore-button:hover {
+  background-color: #066b0d;
+}
+
+/* Overlay para el fondo oscuro */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+  z-index: 9999; /* Debe estar detrás del modal */
+}
+
+/* Mostrar el overlay cuando el modal esté activo */
+.modal-overlay.show {
+  display: block;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000; /* Debe estar encima del overlay */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 500px;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.close-modal {
+  margin-top: 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  background-color: #d32f2f;
+}
+
