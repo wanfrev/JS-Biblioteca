@@ -200,7 +200,7 @@ export async function deleteTesis(tesis) {
           second: "2-digit",
         });
 
-        // Agregar la tesis eliminada al array global
+        // Agregar la tesis eliminada al array global con la fecha y hora exactas
         tesisEliminadasConHora.push({
           ...tesis,
           fechaEliminacion, // Guardar la fecha de eliminación
