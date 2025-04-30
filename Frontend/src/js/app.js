@@ -270,23 +270,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Agregar las tesis eliminadas al modal
       tesisEliminadas.forEach((tesis) => {
-        const fechaFormateada = new Date(tesis.fecha_pub).toLocaleDateString("es-ES", {
+        const fechaEliminacion = new Date(tesis.fecha_hora_eliminacion).toLocaleDateString("es-ES", {
           year: "numeric",
           month: "long",
           day: "numeric",
         });
-
-        // Generar la hora actual (puedes usar un campo de la API si está disponible)
-        const horaEliminacion = new Date().toLocaleTimeString("es-ES", {
+        const horaEliminacion = new Date(tesis.fecha_hora_eliminacion).toLocaleTimeString("es-ES", {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "America/Caracas",
         });
 
         const listItem = document.createElement("li");
         listItem.className = "deleted-thesis-item"; // Clase CSS para estilizar el elemento
         listItem.innerHTML = `
-          <span class="deleted-thesis-title">${tesis.titulo} - ${fechaFormateada} a las ${horaEliminacion}</span>
+          <span class="deleted-thesis-title">${tesis.titulo} - Eliminada el ${fechaEliminacion} a las ${horaEliminacion}</span>
         `;
 
         const restoreButton = document.createElement("button");
@@ -301,14 +298,6 @@ document.addEventListener("DOMContentLoaded", () => {
         restoreButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
         restoreButton.style.transition = "background-color 0.3s ease";
 
-        // Agregar un efecto hover
-        restoreButton.addEventListener("mouseover", () => {
-          restoreButton.style.backgroundColor = "#148c36";
-        });
-        restoreButton.addEventListener("mouseout", () => {
-          restoreButton.style.backgroundColor = "#18a642";
-        });
-
         restoreButton.addEventListener("click", async () => {
           try {
             const restoreResponse = await fetch(
@@ -318,9 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (restoreResponse.ok) {
               alert("Tesis restaurada exitosamente");
               listItem.remove(); // Eliminar la tesis restaurada de la lista
-
-              // Actualizar la lista de tesis en la página principal
-              displayTesis(); // Llama a la función que muestra las tesis
+              displayTesis(); // Actualizar la lista de tesis
             } else {
               alert("Error al restaurar la tesis");
             }

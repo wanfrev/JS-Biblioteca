@@ -118,7 +118,7 @@ router.get("/", async (req, res) => {
 router.get("/eliminadas", async (req, res) => {
   try {
     const [tesisEliminadas] = await db.query(`
-      SELECT id_tesis, titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin
+      SELECT id_tesis, titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin, fecha_hora_eliminacion
       FROM tesis_eliminadas
     `);
 
@@ -226,11 +226,14 @@ router.delete("/:id", async (req, res) => {
 
     const { titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin } = tesis[0];
 
+    // Capturar la fecha y hora actuales
+    const fechaHoraEliminacion = new Date();
+
     // Respaldar los datos en la tabla tesis_eliminadas
     await db.query(
-      `INSERT INTO tesis_eliminadas (titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin]
+      `INSERT INTO tesis_eliminadas (titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin, fecha_hora_eliminacion)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [titulo, fecha_pub, des_tesis, id_carrera, documento, id_admin, fechaHoraEliminacion]
     );
 
     // Eliminar la tesis de la tabla original
